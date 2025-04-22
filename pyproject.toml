@@ -1,0 +1,21 @@
+[project]
+name = "prop_ai_agent"
+version = "0.1.0"
+description = "prop-ai-agent using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.114.0,<1.0.0",
+]
+
+[project.scripts]
+kickoff = "prop_ai_agent.main:kickoff"
+run_crew = "prop_ai_agent.main:kickoff"
+plot = "prop_ai_agent.main:plot"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "flow"

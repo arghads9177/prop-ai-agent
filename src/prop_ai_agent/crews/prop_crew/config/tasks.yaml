@@ -1,0 +1,32 @@
+check_company_profile:
+  description: >
+    Given the provided {company_profile}, validate if it's a proper company profile. 
+    If valid, extract all necessary information in structured JSON format.
+    Given the following text, determine if it's a valid company profile. If valid, extract:
+    - name
+    - industry
+    - location
+    - website (if any)
+    - description
+  expected_output: >
+    A structured JSON with company details. Respond ONLY in the following JSON format:
+    {{
+      "name": "...",
+      "industry": "...",
+      "location": "...",
+      "website": "...",
+      "description": "...",
+      "experience": "...",
+      "services/products": "...",
+      "clients": "...",
+      "business regions/countries": "...",
+      "mission": "...",
+      "vision": "...",
+      "email": "...",
+      "phone": "...",
+      "certifications": "...",
+    }}
+    
+     If the input is not a company profile or lacks enough information, reply with: "❌ Not a valid company profile or insufficient information."
+
+  agent: company_profile_checker
