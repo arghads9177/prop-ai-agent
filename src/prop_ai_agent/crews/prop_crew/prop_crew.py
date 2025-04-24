@@ -23,14 +23,42 @@ class ProposalCrew:
         return Agent(
             config=self.agents_config["company_profile_checker"],
         )
+    
+    @agent
+    def job_description_researcher(self) -> Agent:
+        return Agent(
+            config=self.agents_config["job_description_researcher"],
+        )
+    
+    @agent
+    def proposal_writer(self) -> Agent:
+        return Agent(
+            config=self.agents_config["proposal_writer"],
+        )
 
     # To learn more about structured task outputs,
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
     def check_company_profile(self) -> Task:
+        print
         return Task(
             config=self.tasks_config["check_company_profile"],
+        )
+    
+    @task
+    def research_job_description(self) -> Task:
+        print("Researching job description")
+        return Task(
+            config=self.tasks_config["research_job_description"],
+        )
+    
+    @task
+    def write_proposal(self) -> Task:
+        print("Writing proposal")
+        return Task(
+            config=self.tasks_config["write_proposal"],
+            output_file="proposal.md"
         )
 
     @crew

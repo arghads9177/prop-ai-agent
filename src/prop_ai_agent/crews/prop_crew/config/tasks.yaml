@@ -30,3 +30,80 @@ check_company_profile:
      If the input is not a company profile or lacks enough information, reply with: "❌ Not a valid company profile or insufficient information."
 
   agent: company_profile_checker
+
+research_job_description:
+  description: >
+    Given the provided {job_description}, validate if it's a proper job description. 
+    If valid, extract all necessary information in structured JSON format.
+    You are a job description analysis expert. First validate if the {job_description} is a valid job description. If not valid return error message
+
+    If valid, extract the following information:
+    - Title of the project (if mentioned or can be inferred)
+    - Project type: Is it Software Development, Hardware Supply, Networking, or a combination?
+    - Software Type: Is it Web, Mobile, Desktop, or combination of two or more type?(If it is software development)
+    - Client name (if available)
+    - Tasks:
+    - For Software Development or Networking: list of development or configuration tasks
+    - For Hardware Supply: list of hardware items to be supplied
+    - For each task, provide a title, brief description, and specified time (man-days/weeks/months)
+    - Total specified time for the full project (if mentioned)
+    - Tech stack or materials used or required
+    - For Software Development tech stack should contain only list of programming languages, frameworks, and tools (if specified). Don't specify any other information.
+    - Safety/security terms and conditions (if any)
+    - Other terms and conditions (if any)
+    - Payment terms (if any)
+    - Penalty terms (if any)
+    - Project Milestones (bulleted or listed format) (if any)
+    - Payment Milestones (bulleted or listed format) (if any)
+    - Key deliverables (bulleted or listed format)
+  expected_output: >
+    A structured JSON with job details. Respond ONLY in the following JSON format:
+    {{
+    "title": "...",
+    "project_type": "...",
+    "software_type": "...",
+    "client_name": "...",
+    "tasks": [
+        {{
+        "title": "...",
+        "description": "...",
+        "specified_time": "..."
+        }}
+    ],
+    "total_specified_time": "...",
+    "tech stack/materials": ["...", "..."],
+    "safety_terms": "...",
+    "other_terms": "...",
+    "payment_terms": "...",
+    "penalty_terms": "...",
+    "project_milestones": ["...", "..."],
+    "payment_milestones": ["...", "..."],
+    "key_deliverables": ["...", "..."]
+    }}
+
+    If job description is not valid, return:
+    {{"error": "The provided text is not a valid job description."}}
+  agent: job_description_researcher
+
+write_proposal:
+  description: >
+    Receive structured company information from company_profile_checker agent and job description information from job_description_researcher agent
+    and write a professional proposal for this job.
+  expected_output: >
+    A well-structured professional proposal following this exact Markdown format:\n\n"
+    "# Business Proposal\n"
+    "**Prepared For:** [Client Name]\n"
+    "**Prepared By:** [Company Name]\n"
+    "**Date:** [Proposal Date]\n\n"
+    "## 1. Executive Summary\n"
+    "## 2. About Us\n"
+    "## 3. Services Offered\n"
+    "## 4. Proposed Solution\n"
+    "## 5. Project Timeline\n"
+    "## 6. Pricing & Payment Terms\n"
+    "## 7. Why Choose Us?\n"
+    "## 8. Terms & Conditions\n"
+    "## 9. Next Steps\n\n"
+    "Sincerely,\n[Company Name]"
+    "Note: Replace placeholders intelligently based on input."
+  agent: proposal_writer
